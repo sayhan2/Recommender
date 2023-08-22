@@ -8,7 +8,10 @@ The purpose of this project is to create accurate movie or TV show recommendatio
 ## Features
 - Token authentication for secure user registration and login.
 - Fetching data from external APIs to gather movie and TV show information.
+<<<<<<< HEAD
 - AI-driven recommendation engine to suggest new movies or shows.
+=======
+>>>>>>> 95411e5e88e15e30a3aea8dc574fb0141c1dc685
 - User account creation and profile management.
 - Ability to mark watched movies or shows for personalized recommendations.
 - Collaborative platform where users can friend each other and share movie and show interests.
@@ -33,4 +36,8 @@ At the moment, the project is not open to external contributions.
 
 
 ## License
+<<<<<<< HEAD
 [License information will be added once the project is complete.]
+=======
+[License information will be added once the project is complete.]
+>>>>>>> 95411e5e88e15e30a3aea8dc574fb0141c1dc685
