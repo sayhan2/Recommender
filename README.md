@@ -2,7 +2,7 @@
 
 
 ## Overview
-The purpose of this project is to create accurate movie or TV show recommendations on a platform that allows users to collaborate with each other. This solves the problem of users not having shows or movies to watch and provides personalized recommendations based on their interests.
+The purpose of this project is to create accurate movie and TV show recommendations on a platform that allows users to collaborate with each other. This solves the problem of users not having shows or movies to watch and provides personalized recommendations based on their interests.
 
 
 ## Features
