@@ -85,9 +85,9 @@ router.post('/resetPassword',async(req,res)=>{
         user.resetToken=null;
         user.resetTokenExpires=null;
         await user.save();
-        return res.status(200).json({ message: 'Password reset successful.' });
-    } catch (error){
+        return res.status(200).json({message:'Password reset successful.'});
+    }catch(error){
         console.error('Error resetting password:',error);
-        return res.status(500).json({ message: 'Internal server error.' });
+        return res.status(500).json({ message: 'Internal server error'});
     }
 });

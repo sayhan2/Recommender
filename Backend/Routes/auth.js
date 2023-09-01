@@ -5,7 +5,7 @@ const passport=require('passport');
 const LocalStrategy=require('passport-local').Strategy;
 passport.use(new LocalStrategy(//calls function to use ie. local strategy
     {usernameField:'email'},//declares email as username
-    async (email,password, done)=>{//function uses client-provided parameters to execute 
+    async (email,password,done)=>{//function uses client-provided parameters to execute 
         try{
             const user=await User.findOne({email:email});//finds user in database with that email 
             if(!user){
@@ -30,12 +30,15 @@ function authcheck(req,res,next){//makes sure user logged in before showing rout
         res.redirect('/login');
     }
 }
-passport.serializeUser((user, done)=>{
-    //serialize user's email 
-    done(null, user.email);
-});
-passport.deserializeUser((email,done)=>{//deserializes user email 
-    User.findOne({email:email},(err,user)=>{
-        done(err, user);
-    });
-});
+passport.serializeUser((user,done)=>{
+    done(null,user._id);
+  });
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const user=await User.findById(id);
+      done(null,user);
+    } catch(error){
+      done(error,null);
+    }
+  });
+  

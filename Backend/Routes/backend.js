@@ -5,7 +5,7 @@ const LocalStrategy=require('passport-local').Strategy;
 const uri=process.env.MONGODB_URI;
 const client=new MongoClient(uri);
 const express=require('express');
-const app =express();
+const app=express();
 module.exports=app;
 async function connect(){
   try{
@@ -29,11 +29,13 @@ app.get('/api/movies',async(req, res)=>{
       res.json(movies);
     }catch(err){
       console.error('Error fetching movies:', err);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({error:'Internal server error'});
     }
   });
-  // Start the server
-  const port=3000; // Replace with the desired port number
+  app.use((req,res,next)=>{
+    req.dbClient.close();
+  });
+  const port=3000;//changeport number
   app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
   });
