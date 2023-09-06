@@ -32,8 +32,5 @@ At the moment, the project is not open to external contributions.
 
 
 ## License
-<<<<<<< HEAD
 [License information will be added once the project is complete.]
-=======
-[License information will be added once the project is complete.]
->>>>>>> 95411e5e88e15e30a3aea8dc574fb0141c1dc685
+
