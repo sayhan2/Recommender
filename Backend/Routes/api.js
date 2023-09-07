@@ -1,38 +1,56 @@
 const express=require('express');
 const axios=require('axios');
 const {API_KEY}=require('movies/backend/routes/config');
-async function searchMoviesAndTVShows(query){
-    try{
-      const movieResponse=await axios.get(`https://api.themoviedb.org/3/search/movie`,{
-        params:{
-          query:query,
-          include_adult:false,
-          language:'en-US',
-          page:1,
-          authorization:'Bearer ${API_KEY}',
-        },
-      });
-      const tvShowResponse=await axios.get(`https://api.themoviedb.org/3/search/tv`, {
-        params:{
-          query:query,
-          include_adult: false,
-          language:'en-US',
-          page:1,
-          Authorization:'Bearer ${API_KEY}',
-        },
-      });
-      const bothresults=[
-        ...movieResponse.data.results.map(result=>({...result,media_type:'movie'})),
-        ...tvShowResponse.data.results.map(result=>({...result,media_type:'tv'})),
-      ];
-      results.push(...bothresults);
-    const selectedIds=results.slice(0,5).map(result=>result.id);
-    return selectedIds;
-}catch(error){
+const userSelections=[];
+async function searchMoviesAndTVShows(query) {
+  try {
+    const movieResponse = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
+      params:{
+        query: query,
+        include_adult: false,
+        language: 'en-US',
+        page: 1,
+      },
+      headers: {
+        Authorization:`Bearer ${API_KEY}`,
+      },
+    });
+    const tvShowResponse = await axios.get(`https://api.themoviedb.org/3/search/tv`, {
+      params: {
+        query: query,
+        include_adult: false,
+        language: 'en-US',
+        page: 1,
+      },
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+      },
+    });
+    const results = [
+      ...movieResponse.data.results.map((result) => ({ ...result, media_type: 'movie' })),
+      ...tvShowResponse.data.results.map((result) => ({ ...result, media_type: 'tv' })),
+    ];
+
+    return results;
+  }catch(error){
     console.error(error);
     return [];
   }
 }
+  function addUserSelection(selection){
+        if(userSelections.length<5){//choose up to 5 items
+          userSelections.push(selection);
+          return true;
+        }else{
+          return false;
+        }
+      }
+function getUserSelections(){
+        return userSelections;
+      }
+      function clearUserSelections(){
+        userSelections.length=0;
+      }
 async function fetchrecs(selectedIds){//fetch movie recommendations
     const allrecs=[];
     for(const id of selectedIds){//represents movies sent in to API
@@ -43,7 +61,7 @@ async function fetchrecs(selectedIds){//fetch movie recommendations
         };
         const headers={
             accept: 'application/json',
-            Authorization:'Bearer ${API_KEY}',
+            Authorization:`Bearer ${API_KEY}`,
         };
         try{
             const response=await axios.get(url,{params,headers});
@@ -61,7 +79,7 @@ async function fetchMovieDetails(id) {
     };
     const headers={
         accept:'application/json',
-        Authorization:'Bearer ${API_KEY}',
+        Authorization:`Bearer ${API_KEY}`,
     };
     try {
         const response=await axios.get(url,{ params,headers });
@@ -79,7 +97,7 @@ async function fetchTVShowDetails(showId){
       };
       const headers={
         accept: 'application/json',
-        Authorization:'Bearer ${API_KEY}',
+        Authorization:`Bearer ${API_KEY}`,
       };
       const response=await axios.get(url,{params,headers});
       if(response.data){
@@ -91,3 +109,10 @@ async function fetchTVShowDetails(showId){
       console.error(error);
     }
   }
+  module.exports = {
+    searchMoviesAndTVShows,
+    fetchrecs,
+    fetchMovieDetails,
+    fetchTVShowDetails,
+  };
+  
