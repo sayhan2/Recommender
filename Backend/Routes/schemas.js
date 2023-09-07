@@ -1,7 +1,7 @@
 mongoose=require('mongoose');
 express=require('express');
 const bcrypt=require('bcrypt');
-const user=new mongoose.Schema({
+const user=new mongoose.Schema({//userschema
     _id: mongoose.Schema.Types.ObjectId,
     email:String,
     password:String,//data structure definition 

@@ -12,4 +12,11 @@ const router=express.Router();
 app.get('/',async(req,res)=>{//home page route 
 res.render('home');//second parameter would be data needed to render page (ie. )
 });
+app.get('/settings',async(req,res,next)=>{
+    if (req.isauthenticated()){
+        next();
+    }else{
+        res.redirect('/login');
+    }
+    });
 module.exports=router;
