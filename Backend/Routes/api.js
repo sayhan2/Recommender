@@ -10,7 +10,7 @@ async function searchMoviesAndTVShows(query) {
     ]);
 
     return results.flat(); // Flatten the array of results
-  } catch (error) {
+  } catch (error){
     console.error(error);
     return [];
   }
@@ -30,10 +30,9 @@ function getUserSelections(){
         userSelections.length=0;
       }
       async function fetchrecs(selectedIds) {
-        const allrecs = await Promise.all(
-          selectedIds.map((id) => fetchRecommendations(id))
+        const allrecs=await Promise.all(
+          selectedIds.map((id)=>fetchRecommendations(id))
         );
-      
         return allrecs.flat(); // Flatten the array of recommendations
       }
 async function fetchMediaDetails(id, mediaType){
